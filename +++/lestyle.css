@@ -1,0 +1,57 @@
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.tableau {
+	border: 10px grey ridge;
+	margin: 5em;
+	margin-bottom: 1em;
+}
+
+table {
+	display: block;
+	margin: 1em;
+	border: 10px grey ridge;
+	font-size: small;
+	text-align: left;
+	width: 55em;
+}
+
+table td {
+	border: 2px grey ridge;
+	padding: 1em;
+}
+
+table td img {
+	width: 20em;
+	border: 2px grey ridge;
+}
+
+.lst ul li { display: inline; }
+
+.lst ul li img {
+	border: 10px grey ridge;
+	margin: 2em;
+	margin-bottom: 1em;	
+	width: 450;
+}
+
+.lst ul li video {
+	border: 10px grey ridge;
+	margin: 2em;
+	margin-bottom: 1em;	
+	width: 450;
+}
+
+address {
+	margin: 20px;
+}
+
+#index_tile h1 {
+	margin: 20px;
+}
+
+
