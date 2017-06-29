@@ -57,34 +57,59 @@ content_map = {
 	'.txt': default
 };
 
-def index_content(dir_name, data_dir, index_txt, template):
+def index_content(dir_name, data_dir, index_txt, desc_txt, template):
+
+	print "	indexing content -- " + dir_name;
+
+	# desc_txt is a markdown file containing description 
+	# for the project - no layout applied to it, only md
+	if desc_txt:
+		try:
+			desc_file = open(desc_txt, 'r+');
+			desc_md = markdown.markdown(desc_file.read());
+			# transform markdown
+		except:
+			print "error opening description file: " + desc_txt;
+			desc_md = None;
+			#return;
+
 
 	# index_txt is a json file containing one thing:
 	# an array of files names or glob patterns
 
-	print "	indexing content -- " + dir_name;
+	if index_txt:
+		try:
+			index_file = open(index_txt, 'r+');
+			content_index = json.loads(index_file.read());
+		except:
+			print "error opening index: " + index_txt;
+			content_index = None;
+			#return;
 
-	try:
-		index_file = open(index_txt, 'r+');
-		content_index = json.loads(index_file.read());
-	except:
-		print "error opening index: " + index_txt;
+	if desc_md == None and content_index == None:
 		return;
 	
-	files = [];
-	for i in content_index:
-		f = os.path.join(data_dir, i);
-		if os.path.isfile(f):		
-			files.append(i);
-		else:
-			files += [os.path.basename(a) for a in glob.glob(f)];
-
 	content = ""
-	for j in files:
-		x, ext = os.path.splitext(j);
-		element = content_map[ext](j);
-		if element:
-			content += "<li>" + content_map[ext](j) + "</li>" + "\n";
+
+	if desc_md:
+		content += "<li>" + "<desc>" + "\n" + desc_md + "</desc>" + "</li>" + "\n";
+
+	if content_index:
+
+		files = [];
+		for i in content_index:
+			f = os.path.join(data_dir, i);
+			if os.path.isfile(f):		
+				files.append(i);
+			else:
+				files += [os.path.basename(a) for a in glob.glob(f)];
+
+		
+		for j in files:
+			x, ext = os.path.splitext(j);
+			element = content_map[ext](j);
+			if element:
+				content += "<li>" + content_map[ext](j) + "</li>" + "\n";
 
 	#print content
 
@@ -94,7 +119,7 @@ def index_content(dir_name, data_dir, index_txt, template):
 
 	#check if <Project Name>.txt exists (description file)
 	f = os.path.join(data_dir, "*.txt");
-	txt_files = [a for a in [os.path.basename(a) for a in glob.glob(f)] if a != 'index.txt'];
+	txt_files = [a for a in [os.path.basename(a) for a in glob.glob(f)] if a != 'index.txt' and a != 'desc.txt'];
 	if len(txt_files) == 1:		
 		fn = txt_files[0];
 		link = '<li><a href="' + fn + '">' + fn + '</a></li>';
@@ -173,10 +198,14 @@ if __name__ == '__main__':
 			data_dir = os.path.join(dd, 'data');
 			if os.path.isdir(data_dir):
 
-				#check if content needs index
+				#check if content needs index -- index.txt is a json file
 				content_indx_txt = os.path.join(data_dir, 'index.txt');
-				if os.path.isfile(content_indx_txt):
-					index_content(d, data_dir, content_indx_txt, content_index_template_str);				
+
+				#check if there is a description file -- desc.txt is a markdown file
+				content_desc_txt = os.path.join(data_dir, 'desc.txt');
+
+				if os.path.isfile(content_indx_txt) or os.path.isfile(content_desc_txt):
+					index_content(d, data_dir, content_indx_txt, content_desc_txt, content_index_template_str);				
 
 				
 				#copy content

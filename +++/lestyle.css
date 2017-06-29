@@ -32,6 +32,15 @@ table td img {
 
 .lst ul li { display: inline; }
 
+.lst ul li desc {
+	bborder: 10px grey ridge;
+	margin: 2em;
+	margin-bottom: 1em;	
+	width: 985;
+	display: block;
+}
+
+
 .lst ul li img {
 	border: 10px grey ridge;
 	margin: 2em;
