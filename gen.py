@@ -26,7 +26,13 @@ def translate(txt, dirname):
 		print('error opening <table> file. aborting...');
 		sys.exit(0);
 
-	[text, link] = txt.split('- - -');
+	href = None
+	sections = txt.count('- - -');
+	if sections == 1:
+		[text, link] = txt.split('- - -');		
+	elif sections == 2:
+		[text, link, href] = txt.split('- - -');
+
 	text_md = markdown.markdown(text);
 	link_md = markdown.markdown(link);
 
@@ -34,7 +40,11 @@ def translate(txt, dirname):
 	link_md = link_md.replace('data/', dirname + '/');
 
 	out = table.read().replace('[[text_md]]', text_md);
-	return out.replace('[[link_md]]', link_md);
+	out = out.replace('[[link_md]]', link_md);
+	if href:
+		href = href.replace('data/', dirname + '/');
+		out = "<a " + href + ">" + out + "</a>";
+	return out
 
 def escape_date(dirname):
 	return re.sub('^20\d{2}?.', '', dirname)
@@ -63,7 +73,8 @@ def index_content(dir_name, data_dir, index_txt, desc_txt, template):
 
 	# desc_txt is a markdown file containing description 
 	# for the project - no layout applied to it, only md
-	if desc_txt:
+	desc_md = None
+	if os.path.isfile(desc_txt):
 		try:
 			desc_file = open(desc_txt, 'r+');
 			desc_md = markdown.markdown(desc_file.read());
@@ -76,8 +87,8 @@ def index_content(dir_name, data_dir, index_txt, desc_txt, template):
 
 	# index_txt is a json file containing one thing:
 	# an array of files names or glob patterns
-
-	if index_txt:
+	content_index = None
+	if os.path.isfile(index_txt):
 		try:
 			index_file = open(index_txt, 'r+');
 			content_index = json.loads(index_file.read());

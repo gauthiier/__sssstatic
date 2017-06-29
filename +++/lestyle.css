@@ -25,8 +25,25 @@ table td {
 	padding: 1em;
 }
 
+table td h1 {
+	bborder: 1px red solid;
+	margin-top: 0.4em;
+	margin-bottom: 0.2em;
+}
+
+table td p {
+	bborder: 1px red solid;
+	margin-top: 0.1em;
+	margin-bottom: 0.4em;
+}
+
+
+table tr {
+	text-align: center;
+}
+
 table td img {
-	width: 20em;
+	width: 100%;
 	border: 2px grey ridge;
 }
 

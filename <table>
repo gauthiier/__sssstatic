@@ -3,8 +3,10 @@
 		<td>
 			[[text_md]]
 		</td>
+	</tr>
+	<tr>
 		<td>
-			[[link_md]]
+			[[link_md]]			
 		</td>
 	</tr>
 </table>
