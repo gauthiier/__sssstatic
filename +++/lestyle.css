@@ -47,16 +47,26 @@ table td img {
 	border: 2px grey ridge;
 }
 
+.lst p mat {
+	margin-left: : 2em;
+}
+
 .lst ul li { display: inline; }
 
 .lst ul li desc {
-	bborder: 10px grey ridge;
 	margin: 2em;
 	margin-bottom: 1em;	
 	width: 985;
 	display: block;
 }
 
+.lst ul li desc img {
+	border: 10px grey ridge;
+	margin: 0em;
+	margin-bottom: 2em;
+	width: 985;
+	display: block;
+}
 
 .lst ul li img {
 	border: 10px grey ridge;
@@ -70,6 +80,44 @@ table td img {
 	margin: 2em;
 	margin-bottom: 1em;	
 	width: 450;
+}
+
+.lst ul li sound {
+	display: inline-block;
+	border: 10px grey ridge;
+	margin: 2em;
+	width: 440;
+	padding: 10;
+}
+
+.lst ul li sound track {
+	display: block;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+}
+
+.lst ul li sound info {
+	width: 100%;
+}
+
+.lst ul li sound audio {
+	width: 100%;
+	margin-top: 0.5em;
+}
+
+.lst ul li lo img {
+	border: none;
+	margin: 1em;
+	margin-top: 0.5em;
+	max-width: 300;
+}
+
+.lst ul li la img {
+	border: none;
+	margin: 1em;
+	margin-top: 0.5em;
+	max-width: 100;
+	max-height: 100;
 }
 
 address {

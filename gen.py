@@ -49,13 +49,37 @@ def translate(txt, dirname):
 def escape_date(dirname):
 	return re.sub('^20\d{2}?.', '', dirname)
 
-def emit_img(file):
+def emit_img(file, data_dir):
 	return '<a href="' + file + '"><img src="' + file + '" /></a>'
 
-def emit_video_mp4(file):
+def emit_video_mp4(file, data_dir):
 	return '<video controls><source src="' + file + '" type="video/mp4"</video>'
 
-def default(file):
+def emit_audio(file, data_dir):
+	# an '.audio' file is a json file with a list of audio elements
+	# which need to be bundles as a type of list in a single <li>
+	filename = os.path.join(data_dir, file);
+	with open(filename) as f:
+		audio = json.loads(f.read())
+		out = "<sound>\n"
+		for a in audio:
+			out += "<track>\n"
+			out += "<info>\n"
+			out += "<name>" + a["name"] + "</name>\n"			
+			#out += "<duration>" + a["length"] + "</duration>\n"
+			out += "</info>\n"
+			out += "<audio controls preload>\n"
+			out += '<source src="' + a["file"] + '" type="audio/' + a["type"] + '">'
+			out += "</audio>\n"
+			out += "</track>\n"
+
+		out += "</sound>\n"
+
+		return out
+
+	return "to do to do to do"
+
+def default(file, data_dir):
 	return None;
 
 content_map = {
@@ -63,6 +87,7 @@ content_map = {
 	'.jpg': emit_img,
 	'.m4v': emit_video_mp4,
 	'.mov': emit_video_mp4,
+	'.audio': emit_audio,
 	'.html': default,
 	'.txt': default
 };
@@ -118,9 +143,10 @@ def index_content(dir_name, data_dir, index_txt, desc_txt, template):
 		
 		for j in files:
 			x, ext = os.path.splitext(j);
-			element = content_map[ext](j);
-			if element:
-				content += "<li>" + content_map[ext](j) + "</li>" + "\n";
+			if ext in content_map:
+				element = content_map[ext](j, data_dir);
+				if element:
+					content += "<li>" + element + "</li>" + "\n";
 
 	#print content
 
