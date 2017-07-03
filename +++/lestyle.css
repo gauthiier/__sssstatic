@@ -68,6 +68,14 @@ table td img {
 	display: block;
 }
 
+.lst ul li desc video {
+	border: 10px grey ridge;
+	margin: 0em;
+	margin-bottom: 2em;
+	width: 985;
+	display: block;
+}
+
 .lst ul li img {
 	border: 10px grey ridge;
 	margin: 2em;

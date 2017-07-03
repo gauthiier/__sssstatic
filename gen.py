@@ -87,6 +87,7 @@ content_map = {
 	'.jpg': emit_img,
 	'.m4v': emit_video_mp4,
 	'.mov': emit_video_mp4,
+	'.mp4': emit_video_mp4,
 	'.audio': emit_audio,
 	'.html': default,
 	'.txt': default
@@ -143,6 +144,7 @@ def index_content(dir_name, data_dir, index_txt, desc_txt, template):
 		
 		for j in files:
 			x, ext = os.path.splitext(j);
+			ext = ext.lower()
 			if ext in content_map:
 				element = content_map[ext](j, data_dir);
 				if element:
