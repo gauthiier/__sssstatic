@@ -47,6 +47,10 @@ table td img {
 	border: 2px grey ridge;
 }
 
+.lst {
+	margin-right: 3em;
+}
+
 .lst p mat {
 	margin-left: : 2em;
 }
